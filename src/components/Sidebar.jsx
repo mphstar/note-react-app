@@ -1,6 +1,6 @@
 import React from "react";
 
-const Sidebar = ({ querySearch, onChangeSearch }) => {
+const Sidebar = ({ querySearch, onChangeSearch, handleModal }) => {
   return (
     <div className="flex w-full h-fit flex-col gap-3 md:flex-row items-center py-4 border-b-2 px-4">
       <p className="font-bold flex-1">Notes App</p>
@@ -13,7 +13,7 @@ const Sidebar = ({ querySearch, onChangeSearch }) => {
           placeholder="Cari catatan"
           type="text"
         />
-        <button className="bg-green-500 text-white hover:bg-green-600 px-3 rounded-md">Tambah</button>
+        <button onClick={handleModal} className="bg-green-500 text-white hover:bg-green-600 px-3 rounded-md">Tambah</button>
       </div>
     </div>
   );
