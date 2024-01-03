@@ -23,6 +23,7 @@ class App extends React.Component {
     this.onChangeQuerySearch = this.onChangeQuerySearch.bind(this);
     this.onArsipCatatan = this.onArsipCatatan.bind(this);
     this.onMoveCatatan = this.onMoveCatatan.bind(this);
+    this.onDeleteCatatan = this.onDeleteCatatan.bind(this);
     this.handleModal = this.handleModal.bind(this);
     this.onChangeFormCatatan = this.onChangeFormCatatan.bind(this);
   }
@@ -55,15 +56,23 @@ class App extends React.Component {
       ],
       judul: "",
       catatan: "",
-      sisaKarakter: this.state.maxKarakter
+      sisaKarakter: this.state.maxKarakter,
     });
 
-    this.handleModal()
+    this.handleModal();
   };
 
   handleModal = () => {
     this.setState({
       isShowModal: !this.state.isShowModal,
+    });
+  };
+
+  onDeleteCatatan = (id) => {
+    const temp = this.state.listCatatan.filter((item) => item.id !== id);
+
+    this.setState({
+      listCatatan: temp,
     });
   };
 
@@ -120,6 +129,7 @@ class App extends React.Component {
           <CatatanLayout
             onArsip={this.onArsipCatatan}
             title={"Catatan Saya"}
+            onDeleteCatatan={this.onDeleteCatatan}
             listCatatan={
               this.state.querySearch != ""
                 ? this.state.listCatatan
@@ -128,14 +138,18 @@ class App extends React.Component {
                         .toLocaleLowerCase()
                         .includes(this.state.querySearch.toLowerCase())
                     )
-                    .filter((item) => !item.archived).reverse()
-                : this.state.listCatatan.filter((item) => !item.archived).reverse()
+                    .filter((item) => !item.archived)
+                    .reverse()
+                : this.state.listCatatan
+                    .filter((item) => !item.archived)
+                    .reverse()
             }
           />
           <CatatanLayout
             isCatatan
             onArsip={this.onMoveCatatan}
             title={"Arsip Saya"}
+            onDeleteCatatan={this.onDeleteCatatan}
             listCatatan={
               this.state.querySearch != ""
                 ? this.state.listCatatan
@@ -144,8 +158,11 @@ class App extends React.Component {
                         .toLowerCase()
                         .includes(this.state.querySearch.toLocaleLowerCase())
                     )
-                    .filter((item) => item.archived).reverse()
-                : this.state.listCatatan.filter((item) => item.archived).reverse()
+                    .filter((item) => item.archived)
+                    .reverse()
+                : this.state.listCatatan
+                    .filter((item) => item.archived)
+                    .reverse()
             }
           />
         </div>
